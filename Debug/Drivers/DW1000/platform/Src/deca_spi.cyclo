@@ -1,0 +1,4 @@
+../Drivers/DW1000/platform/Src/deca_spi.c:30:5:openspi	1
+../Drivers/DW1000/platform/Src/deca_spi.c:41:5:closespi	1
+../Drivers/DW1000/platform/Src/deca_spi.c:54:5:writetospi	2
+../Drivers/DW1000/platform/Src/deca_spi.c:88:5:readfromspi	2

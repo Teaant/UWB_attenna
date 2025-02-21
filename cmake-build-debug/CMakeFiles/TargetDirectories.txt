@@ -1,0 +1,3 @@
+D:/STM32CubeIDE/project/antenna_6UWB/cmake-build-debug/CMakeFiles/antenna_6UWB.elf.dir
+D:/STM32CubeIDE/project/antenna_6UWB/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/STM32CubeIDE/project/antenna_6UWB/cmake-build-debug/CMakeFiles/rebuild_cache.dir

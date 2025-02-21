@@ -1,0 +1,45 @@
+CMakeFiles/antenna_6UWB.elf.dir/Core/Src/syscalls.c.obj: \
+ D:\STM32CubeIDE\project\antenna_6UWB\Core\Src\syscalls.c \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\stat.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\_ansi.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\newlib.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\_newlib_version.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\config.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\ieeefp.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\features.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\time.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\_ansi.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\cdefs.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\_default_types.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\lib\gcc\arm-none-eabi\10.3.1\include\stddef.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\reent.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_types.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\_types.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\lock.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\time.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\types.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_stdint.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\endian.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\_endian.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\select.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_sigset.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_timeval.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\timespec.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_timespec.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_pthreadtypes.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\sched.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\types.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\_locale.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\stdlib.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\stdlib.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\alloca.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\errno.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\errno.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\stdio.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\lib\gcc\arm-none-eabi\10.3.1\include\stdarg.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\stdio.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\signal.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\signal.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\time.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\machine\_time.h \
+ d:\gnu\ arm\ embedded\ toolchain\10\ 2021.07\arm-none-eabi\include\sys\times.h
