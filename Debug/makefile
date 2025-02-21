@@ -68,8 +68,8 @@ all: main-build
 main-build: antenna_6UWB.elf secondary-outputs
 
 # Tool invocations
-antenna_6UWB.elf antenna_6UWB.map: $(OBJS) $(USER_OBJS) D:\STM32CubeIDE\project\antenna_6UWB\STM32H750VBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "antenna_6UWB.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\STM32CubeIDE\project\antenna_6UWB\STM32H750VBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="antenna_6UWB.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+antenna_6UWB.elf antenna_6UWB.map: $(OBJS) $(USER_OBJS) D:\tanya\UWB\ follow\codes\antenna_6UWB\STM32H750VBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "antenna_6UWB.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\tanya\UWB follow\codes\antenna_6UWB\STM32H750VBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="antenna_6UWB.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
