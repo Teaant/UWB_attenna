@@ -10,12 +10,32 @@
 
 #define BUFFER_LEN      (128)
 
+
 typedef struct
 {
+	uint16_t src_addr;  //接收到的相位的源地址
+	uint32_t sequence;
 	float phi;
 	float beta;
-	uint16_t src_addr;  //接收到的相位的源地址
 } __align4 AoAParamTypeDef;
+
+typedef struct{
+	uint8_t my_dw_id;
+	uint8_t rcphase;
+	uint32_t rx_ts;
+	float fp_angle;
+	uint16_t fp_index;
+	uint16_t fp_amp1;
+	uint16_t fp_amp2;
+	uint16_t fp_amp3;
+	uint32_t fp_amp_sum;
+	uint16_t std_noise;
+	uint8_t avalible;
+	uint16_t rxpacc;
+	uint16_t rxpacc_nosat;
+	uint16_t cir_pwr;
+}AoADiagnosticTypeDef;
+
 
 typedef struct
 {
@@ -44,6 +64,11 @@ typedef struct
 	uint8_t index;
 
     Buffer_t antenna_buffer;  //收发缓冲
+
+    AoAParamTypeDef aoa_param;
+
+    AoADiagnosticTypeDef aoa_diagnose;
+
 } __align4 DW1000_Port_t;
 
 typedef struct

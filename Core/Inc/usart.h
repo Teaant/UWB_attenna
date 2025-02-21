@@ -36,6 +36,9 @@ extern UART_HandleTypeDef huart4;
 
 /* USER CODE BEGIN Private defines */
 
+#pragma pack()
+
+
 /* USER CODE END Private defines */
 
 void MX_UART4_Init(void);

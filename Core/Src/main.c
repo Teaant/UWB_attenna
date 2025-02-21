@@ -27,6 +27,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "uwb.h"
+
+//tanya_add
+#include "aoa_queue.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +51,11 @@
 
 /* USER CODE BEGIN PV */
 volatile UWB_Device UWB_device_array[DWT_NUM_DW_DEV];
+
+
+volatile AoADiagnosticTypeDef aoa_diagnostic[DWT_NUM_DW_DEV];
+volatile AoADataTypeDef aoa_data[4];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,8 +129,16 @@ int main(void)
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+
+	volatile uint8_t index = 255;
 	while(1)
 	{
+		index = dequeueData();
+		if (index != 255) {
+			DW1000_Port_t *pa = &UWB_device_array[index];
+			//可增加
+			printf("\n%u,%u,%u,%f,%f", pa->aoa_param.sequence, index, pa->aoa_param.src_addr, pa->aoa_param.phi, pa->aoa_param.beta);
+		}
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */

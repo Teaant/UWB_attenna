@@ -4,6 +4,9 @@
 #include "uwb.h"
 #include <math.h>
 
+//Tanya_add
+#include "aoa_queue.h"
+
 //#define ACC_MEM_TEST 1
 /* Default communication configuration. We use here EVK1000's default mode (mode 3). */
 static dwt_config_t config = {
@@ -25,6 +28,8 @@ static uint64 get_tx_timestamp_u64(DW1000_Port_t *pports);
 static uint64 get_rx_timestamp_u64(DW1000_Port_t *pports);
 
 extern volatile UWB_Device UWB_device_array[DWT_NUM_DW_DEV];
+
+volatile uint32_t data_sequence = 0;
 
 
 UWB_StatusTypeDef Antenna_Array_Init()
@@ -198,6 +203,73 @@ static uint64 get_rx_timestamp_u64(DW1000_Port_t *pports)
 }
 
 
+
+static void read_pdoa(DW1000_Port_t *antenna_port)
+{
+//	uint64_t rx_ts_64 = (uint64_t) get_rx_timestamp_u64(pports);
+//	uint32_t rx_ts = (uint32_t) rx_ts_64;
+//	uint16_t src_car_id = uwb_node.pdoa_buffer.header.src;
+//	uint8_t my_dw_id = pports - &UWB.ports[0];
+	uint8_t my_dw_id = attenna_port->index;
+
+	uint8_t rcphase;
+	dwt_rxdiag_t tempdiag;
+	uint8_t tempacc[129];
+	uint16_t fp_index;
+	float fp_angle;
+	AoADiagnosticTypeDef *pdiag = &(antenna_port->aoa_diagnose);
+
+	dwt_readrcphase(&rcphase, antenna_port);
+	dwt_readdiagnostics(&tempdiag, pports);
+	fp_index = (uint16_t) round(((float) (tempdiag.firstPath & 0x3F) / 0x3F))
+			+ (tempdiag.firstPath >> 6);
+	fp_angle = uwb_get_fp_angle(fp_index, pports);
+
+	//私以为这些都没什么必要的？但是是一些这种数据
+	pdiag->avalible = 1;
+	pdiag->fp_amp1 = tempdiag.firstPathAmp1;
+	pdiag->fp_amp2 = tempdiag.firstPathAmp2;
+	pdiag->fp_amp3 = tempdiag.firstPathAmp3;
+	pdiag->fp_amp_sum = pdiag->fp_amp1 + pdiag->fp_amp2 + pdiag->fp_amp3;
+	pdiag->fp_angle = fp_angle;
+	pdiag->fp_index = fp_index;
+	pdiag->my_dw_id = my_dw_id;
+	pdiag->rcphase = rcphase;
+	pdiag->rx_ts = rx_ts;
+	pdiag->std_noise = tempdiag.stdNoise;
+	pdiag->cir_pwr = tempdiag.maxGrowthCIR;
+	pdiag->rxpacc = tempdiag.rxPreamCount;
+	pdiag->rxpacc_nosat = tempdiag.rxPreamCountNOSAT;
+
+	//test
+	if (pdiag->fp_amp1 < (uint16_t) 256) {
+		pdiag->avalible = 0;
+		return;
+	}
+
+	antenna_port->aoa_param.phi = fp_angle;
+	antenna_port->aoa_param.beta = (float) rcphase / 64.0 * PI;
+	antenna_port->aoa_param.sequence = data_sequence;
+
+	/**
+	 * @TODO enqueueData  (with index)
+	 */
+
+	enqueueData(antenna_port->index);
+	//u 无符号十进制数
+//	printf("%u,%f,%u,%u,%u,%u,%u,%u,%u,%u,%u,", pdiag->my_dw_id, pdiag->fp_angle, pdiag->rcphase, pdiag->fp_index,
+//									pdiag->fp_amp1, pdiag->fp_amp2, pdiag->fp_amp3, pdiag->std_noise, pdiag->cir_pwr, pdiag->rxpacc, pdiag->rxpacc_nosat);
+
+
+
+//	UWB.aoa_param[my_dw_id].phi = fp_angle;
+//	UWB.aoa_param[my_dw_id].beta = (float) rcphase / 64.0 * PI;
+//	UWB.aoa_param[my_dw_id].avalible = 1;
+//	UWB.aoa_param[my_dw_id].src_car_id = src_car_id;
+}
+
+
+
 void rxOkCallback(const dwt_cb_data_t *cbData, DW1000_Port_t *antenna_port)
 {
 	uint64 rx_timestamp = 0;
@@ -216,7 +288,16 @@ void rxOkCallback(const dwt_cb_data_t *cbData, DW1000_Port_t *antenna_port)
 
 	rx_timestamp = get_rx_timestamp_u64(antenna_port);
 
+
+	read_pdoa(antenna_port);
+
+	//这边要使用一个定时器 ~
+
+
+
+
 }
+
 
 void rxToCallback(const dwt_cb_data_t *cbData, DW1000_Port_t *antenna_port)
 {
@@ -241,25 +322,25 @@ void rxErrCallback(const dwt_cb_data_t *cbData, DW1000_Port_t *antenna_port)
 				 antenna_port);
 }
 
-//static float uwb_get_fp_angle(uint16_t fp_index, UWB_Device *pports)
-//{
-//    uint8_t acc_buffer[5];
-//    uint8_t len = 4;
-//    int16_t cir_real, cir_imag;
-//    dwt_readaccdata(acc_buffer,
-//                    len + 1,
-//                    4 * fp_index,
-//                    pports);
-//    memcpy(&cir_real,
-//           &acc_buffer[1],
-//           sizeof(int16_t));
-//    memcpy(&cir_imag,
-//           &acc_buffer[3],
-//           sizeof(int16_t));
-//    return atan2f((float) cir_imag,
-//                  (float) cir_real);
-//}
-//
+static float uwb_get_fp_angle(uint16_t fp_index, UWB_Device *pports)
+{
+    uint8_t acc_buffer[5];
+    uint8_t len = 4;
+    int16_t cir_real, cir_imag;
+    dwt_readaccdata(acc_buffer,
+                    len + 1,
+                    4 * fp_index,
+                    pports);
+    memcpy(&cir_real,
+           &acc_buffer[1],
+           sizeof(int16_t));
+    memcpy(&cir_imag,
+           &acc_buffer[3],
+           sizeof(int16_t));
+    return atan2f((float) cir_imag,
+                  (float) cir_real);
+}
+
 //void uwb_tx_sync_msg()
 //{
 //    UWB_Device *pports = &UWB.ports[0];
