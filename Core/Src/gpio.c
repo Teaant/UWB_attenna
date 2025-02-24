@@ -52,19 +52,31 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, UWB1_RESET_Pin|UWB1_CSn_Pin|GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, UWB1_RESET_Pin|UWB1_CSn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, UWB1_WAKEUP_Pin|UWB2_RESET_Pin|UWB2_CSn_Pin|UWB2_WAKEUP_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, UWB1_WAKEUP_Pin|UWB2_WAKEUP_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, UWB3_RESET_Pin|UWB3_CSn_Pin|UWB3_WAKEUP_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, UWB2_RESET_Pin|UWB2_CSn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, UWB4_RESET_Pin|UWB4_CSn_Pin|UWB4_WAKEUP_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, UWB3_RESET_Pin|UWB3_CSn_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(UWB3_WAKEUP_GPIO_Port, UWB3_WAKEUP_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, UWB4_RESET_Pin|UWB4_CSn_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(UWB4_WAKEUP_GPIO_Port, UWB4_WAKEUP_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SYNC_EN_GPIO_Port, SYNC_EN_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = UWB1_IRQ_Pin;

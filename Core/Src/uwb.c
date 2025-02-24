@@ -7,6 +7,7 @@
 //Tanya_add
 #include "aoa_queue.h"
 #include "tim.h"
+#include "uwb_msg.h"
 
 //#define ACC_MEM_TEST 1
 /* Default communication configuration. We use here EVK1000's default mode (mode 3). */
@@ -245,7 +246,7 @@ static void read_pdoa(DW1000_Port_t *antenna_port, uint64 rx_ts)
 			+ (tempdiag.firstPath >> 6);
 	fp_angle = uwb_get_fp_angle(fp_index, antenna_port);
 
-	//私以为这些都没什么必要的？但是是一些这种数据
+	//私以为这些都没什么必要的？或可也打印出去
 	pdiag->avalible = 1;
 	pdiag->fp_amp1 = tempdiag.firstPathAmp1;
 	pdiag->fp_amp2 = tempdiag.firstPathAmp2;
@@ -298,10 +299,16 @@ void rxOkCallback(const dwt_cb_data_t *cbData, DW1000_Port_t *antenna_port)
 
 	rx_timestamp = get_rx_timestamp_u64(antenna_port);
 
+	UWB_Msg_Header_t* pmsg = (UWB_Msg_Header_t*)(antenna_port->antenna_buffer.rxBuffer);
+	data_sequence = pmsg->sequence;
+
 	read_pdoa(antenna_port, rx_timestamp);
 
+	/* Clear reception timeout to start next ranging process. */
+	dwt_setrxtimeout(0, antenna_port);
 
-
+	/* Activate reception immediately. */
+	dwt_rxenable(DWT_START_RX_IMMEDIATE, antenna_port);
 
 }
 

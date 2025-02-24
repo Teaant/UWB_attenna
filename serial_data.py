@@ -5,7 +5,7 @@ import time
 # 配置串口参数，请根据你的设置修改  
 COM_PORT = 'COM3'  # 或 '/dev/ttyUSB0' (Linux/Mac)  
 BAUD_RATE = 115200  # 波特率要和STM32一致  
-TIMEOUT = 1  # 超时时间（秒）  
+TIMEOUT = None  # 超时时间（秒）  
 
 # 创建串口对象  
 ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=TIMEOUT)  
@@ -21,7 +21,7 @@ with open(csv_file, mode='a', newline='') as file:
     writer = csv.writer(file)  
     
     # 写入CSV文件标题（如果需要的话）  
-    writer.writerow(['Sequence', 'Index', 'SrcAddr', 'Phi', 'Beta'])  
+    writer.writerow(['Sequence', 'Index', 'Phi', 'Beta'])  
 
     try:  
         print("开始接收数据...")  
@@ -31,7 +31,7 @@ with open(csv_file, mode='a', newline='') as file:
             if line:  
                 # 分割数据根据逗号  
                 data = line.split(',')  
-                if len(data) == 5:  # 确保接收到的字段数量正确  
+                if len(data) == 4:  # 确保接收到的字段数量正确  
                     try:  
                         # 将数据写入CSV文件  
                         writer.writerow(data)  

@@ -62,12 +62,14 @@ typedef struct
 	 * 用index分辨不同的DW1000(例如本DW1000在设备数组的索引)
 	 */
 	uint8_t index;
+	uint8_t available;
 
     Buffer_t antenna_buffer;  //收发缓冲
 
     AoAParamTypeDef aoa_param;
 
     AoADiagnosticTypeDef aoa_diagnose;
+
 
 } __align4 DW1000_Port_t;
 

@@ -115,7 +115,8 @@ int main(void)
 	 *
 	 * RSTn引脚被DW1000内部拉高标志着进入了INIT状态
 	 */
-	if(Check_DW1000RSTn(100) != UWB_OK || Antenna_Array_Init() != UWB_OK)
+	if(  Antenna_Array_Init() != UWB_OK ||Check_DW1000RSTn(100) != UWB_OK)
+//	if( Antenna_Array_Init() != UWB_OK)
 	{
 		/* 只需成功 不需失败 重启*/
 		__disable_irq();
@@ -126,15 +127,24 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	for (int i = 0; i < DWT_NUM_DW_DEV; i++) {
+		if (UWB_device_array[i].port.available == 1) {
+			/* Set expected response's delay and timeout. See NOTE 4, 5 and 6 below.
+			 * As this example only handles one incoming frame with always the same delay and timeout, those values can be set here once for all. */
+			// 			dwt_setrxaftertxdelay(0, pports);  //若是不设置呢，我希望在代码中设置的，若是不进入rx我希�???
+			dwt_setrxtimeout(0, &UWB_device_array[i].port);
+			dwt_rxenable(DWT_START_RX_IMMEDIATE, &UWB_device_array[i].port);
+		}
+	}
 
 	volatile uint8_t index = 255;
 	while(1)
 	{
 		index = dequeueData();
 		if (index != 255) {
-			DW1000_Port_t *pa = &UWB_device_array[index];
+			DW1000_Port_t *pa = &UWB_device_array[index].port;
 			//可增加
-			printf("\n%u,%u,%u,%f,%f", pa->aoa_param.sequence, index, pa->aoa_param.src_addr, pa->aoa_param.phi, pa->aoa_param.beta);
+			printf("%u,%u,%f,%f\n", pa->aoa_param.sequence, index, pa->aoa_param.phi, pa->aoa_param.beta);
 		}
     /* USER CODE END WHILE */
 
@@ -158,24 +168,23 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_CSI;
-  RCC_OscInitStruct.CSIState = RCC_CSI_ON;
-  RCC_OscInitStruct.CSICalibrationValue = RCC_CSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_CSI;
-  RCC_OscInitStruct.PLL.PLLM = 1;
-  RCC_OscInitStruct.PLL.PLLN = 120;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 2;
+  RCC_OscInitStruct.PLL.PLLN = 32;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -196,7 +205,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }

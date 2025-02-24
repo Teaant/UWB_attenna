@@ -41,7 +41,7 @@ Core/Src/uwb.o: ../Core/Src/uwb.c ../Core/Inc/main.h \
  ../Drivers/DW1000/decadriver/Inc/deca_version.h \
  ../Drivers/DW1000/platform/Inc/deca_spi.h \
  ../Drivers/DW1000/decadriver/Inc/deca_types.h ../Core/Inc/aoa_queue.h \
- ../Core/Inc/tim.h
+ ../Core/Inc/tim.h ../Core/Inc/uwb_msg.h ../Core/Inc/uwb.h
 ../Core/Inc/main.h:
 ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
 ../Core/Inc/stm32h7xx_hal_conf.h:
@@ -91,3 +91,5 @@ Core/Src/uwb.o: ../Core/Src/uwb.c ../Core/Inc/main.h \
 ../Drivers/DW1000/decadriver/Inc/deca_types.h:
 ../Core/Inc/aoa_queue.h:
 ../Core/Inc/tim.h:
+../Core/Inc/uwb_msg.h:
+../Core/Inc/uwb.h:
